@@ -1,7 +1,7 @@
-### Unique IDs and time
-### Comparison of UUID, ULID, Snowflake ID, and KSUID
+# Unique IDs and time
+## Comparison of UUID, ULID, Snowflake ID, and KSUID
 
-#### UUID (Universally Unique Identifier)
+### UUID (Universally Unique Identifier)
 - **Format**: 128 bits, typically represented as a 36-character string with hyphens (e.g., `123e4567-e89b-12d3-a456-426614174000`).
 - **Structure**:
     - **v1**: Based on timestamp and MAC address.
@@ -12,7 +12,7 @@
     - **v4** relies on randomness, leading to fragmentation in databases.
 - **Use Cases**: General purpose ID generation for distributed systems.
 
-#### ULID (Universally Unique Lexicographically Sortable Identifier)
+### ULID (Universally Unique Lexicographically Sortable Identifier)
 - **Format**: 128-bit identifier represented as a 26-character string.
 - **Structure**:
     - **48 bits** for timestamp (in milliseconds).
@@ -22,7 +22,7 @@
     - Allows for **natural ordering**.
 - **Use Cases**: Distributed logging, event sourcing, scenarios requiring easy ordering.
 
-#### Snowflake ID (Twitter Snowflake)
+### Snowflake ID (Twitter Snowflake)
 - **Format**: 64-bit integer represented as a number.
 - **Structure**:
     - **41 bits** for timestamp.
@@ -33,7 +33,7 @@
     - Requires specific infrastructure for unique machine IDs.
 - **Use Cases**: High-write rate environments, easy database sharding.
 
-#### KSUID (K-Sortable Unique Identifier)
+### KSUID (K-Sortable Unique Identifier)
 - **Format**: 160-bit identifier represented as a 27-character string.
 - **Structure**:
     - **32 bits** for timestamp (seconds since epoch).
@@ -43,14 +43,14 @@
     - Suitable for **high-scale** distributed environments.
 - **Use Cases**: Similar to ULID, but more robust to collision due to higher randomness.
 
-### Monotonically Increasing ULID vs KSUID
+## Monotonically Increasing ULID vs KSUID
 
-#### What is a Monotonically Increasing ULID?
+### What is a Monotonically Increasing ULID?
 - **Monotonically Increasing ULID** ensures IDs are strictly incremented, even if generated within the same millisecond.
 - Used to **maintain order** when generating multiple IDs very quickly.
 - Requires **state tracking** of the last generated ULID to increment within the same millisecond.
 
-#### How KSUID and Monotonically Increasing ULID Handle Time Drift
+### How KSUID and Monotonically Increasing ULID Handle Time Drift
 - **Time Drift Issue**: If the system clock moves backward due to **NTP synchronization**, there can be ordering violations.
 
 **KSUID**:
@@ -71,7 +71,7 @@
     - Hybrid approach to use randomness with an incremented component.
     - Logical clocks or application-level monotonic logic.
 
-### Summary
+### So....
 - **KSUID** is designed to be **stateless** and **globally unique** without needing coordination, which means that making it **monotonically increasing** adds complexity.
 - **Monotonically Increasing ULID** is ideal for use cases requiring **strict ordering**, but it requires **state management**, making it less suitable for fully distributed environments.
 
