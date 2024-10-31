@@ -1,4 +1,20 @@
 # Unique IDs and time
+
+<!-- TOC -->
+* [Unique IDs and time](#unique-ids-and-time)
+  * [Comparison of UUID, ULID, Snowflake ID, and KSUID](#comparison-of-uuid-ulid-snowflake-id-and-ksuid)
+    * [UUID (Universally Unique Identifier)](#uuid-universally-unique-identifier)
+    * [ULID (Universally Unique Lexicographically Sortable Identifier)](#ulid-universally-unique-lexicographically-sortable-identifier)
+    * [Snowflake ID (Twitter Snowflake)](#snowflake-id-twitter-snowflake)
+    * [KSUID (K-Sortable Unique Identifier)](#ksuid-k-sortable-unique-identifier)
+  * [Monotonically Increasing ULID vs KSUID](#monotonically-increasing-ulid-vs-ksuid)
+    * [What is a Monotonically Increasing ULID?](#what-is-a-monotonically-increasing-ulid)
+    * [How KSUID and Monotonically Increasing ULID Handle Time Drift](#how-ksuid-and-monotonically-increasing-ulid-handle-time-drift)
+    * [Monotonically Increasing KSUID?](#monotonically-increasing-ksuid)
+    * [So....](#so)
+<!-- TOC -->
+
+
 ## Comparison of UUID, ULID, Snowflake ID, and KSUID
 
 ### UUID (Universally Unique Identifier)
