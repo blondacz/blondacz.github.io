@@ -36,6 +36,9 @@
 - **Characteristics**:
     - **Lexicographically sortable** for IDs generated close in time.
     - Allows for **natural ordering**.
+    - Implementations can choose to implement monotonic option which orders the ULIDs generated with the same millisecond. 
+     Probability of collision of such ids is debated [here](https://zendesk.engineering/how-probable-are-collisions-with-ulids-monotonic-option-d604d3ed2de)  
+  
 - **Use Cases**: Distributed logging, event sourcing, scenarios requiring easy ordering.
 
 ### Snowflake ID (Twitter Snowflake)
