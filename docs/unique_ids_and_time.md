@@ -17,6 +17,8 @@
 
 ## Comparison of UUID, ULID, Snowflake ID, and KSUID
 
+> __**Note:**__ NONE of the ID types bellow do NOT require persistance
+
 ### UUID (Universally Unique Identifier)
 - **Format**: 128 bits, typically represented as a 36-character string with hyphens (e.g., `123e4567-e89b-12d3-a456-426614174000`).
 - **Structure**:
@@ -29,15 +31,30 @@
 - **Use Cases**: General purpose ID generation for distributed systems.
 
 ### ULID (Universally Unique Lexicographically Sortable Identifier)
+> __**Example of 10 Monotonic ULIDs (timestamp:Instant:actual ULID):**__   
+>1730721040643 \ 2024-11-04T11:50:40.643Z \ 01JBVG6J83MAPYPAQXDG25NVHZ  
+1730721040660 \ 2024-11-04T11:50:40.660Z \ 01JBVG6J8M23Q4BCFEPHQ11ZE9  
+1730721040660 \ 2024-11-04T11:50:40.660Z \ 01JBVG6J8MYKSHYFZAZDE8A8A8  
+1730721040661 \ 2024-11-04T11:50:40.661Z \ 01JBVG6J8NH77TCSD09F8W0HT2  
+1730721040661 \ 2024-11-04T11:50:40.661Z \ 01JBVG6J8NV8BQVM7YG75ETX4Z  
+1730721040661 \ 2024-11-04T11:50:40.661Z \ 01JBVG6J8NZSBY40Q6FME842RR  
+1730721040661 \ 2024-11-04T11:50:40.661Z \ 01JBVG6J8NR7JFSJRJ974YBHE5  
+1730721040661 \ 2024-11-04T11:50:40.661Z \ 01JBVG6J8NKX023DTKTPQJKZP1  
+1730721040661 \ 2024-11-04T11:50:40.661Z \ 01JBVG6J8NYK3CPXN2KP2CN38X  
+1730721040661 \ 2024-11-04T11:50:40.661Z \ 01JBVG6J8NWN4JXFZCMX3X89X6
+
+
 - **Format**: 128-bit identifier represented as a 26-character string.
 - **Structure**:
     - **48 bits** for timestamp (in milliseconds).
     - **80 bits** for randomness.
+    - Using URL-safe characters encoded with [Crockford’s Base32](https://www.crockford.com/base32.html), which excludes letters like I, L, O, and U to avoid confusion for human eyes
 - **Characteristics**:
     - **Lexicographically sortable** for IDs generated close in time.
     - Allows for **natural ordering**.
     - Implementations can choose to implement monotonic option which orders the ULIDs generated with the same millisecond. 
      Probability of collision of such ids is debated [here](https://zendesk.engineering/how-probable-are-collisions-with-ulids-monotonic-option-d604d3ed2de)
+    - Monotonic implementation does not require any kind of coordination between different nodes and the generated IDs between different nodes will be sitting next to each other in close proximity with others  generated in the same millis.
     
   
 - **Use Cases**: Distributed logging, event sourcing, scenarios requiring easy ordering.
