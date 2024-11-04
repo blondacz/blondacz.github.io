@@ -93,6 +93,13 @@ Here's a simple example of how a **composite sharding key** can be used to shard
 import java.security.MessageDigest
 
 object ShardCalculator {
+  //3 physical shards
+  private val virtualToPhysicalShardMapping : Map[Int,Int] = Map(
+    1 -> 1, 2->2, 3->3, 4-> 1, 5-> 2, 6 -> 3, 7 -> 1, 8-> 2, 9 -> 3, 10 -> 1 
+  ) 
+  def mapToPhysicalShard(virtualShardId: Int) : Int = {
+    virtualToPhysicalShardMapping(virtualShardId)
+  } 
   def getShardId(marketType: String, ulid: String, numberOfShards: Int): Int = {
     // Create a composite key using market type and ULID
     val compositeKey = s"$marketType-$ulid"
@@ -100,9 +107,10 @@ object ShardCalculator {
     val hashBytes = md.digest(compositeKey.getBytes("UTF-8"))
     // Convert the first 4 bytes of the hash to an integer
     val hashValue = BigInt(hashBytes.take(4)).toInt
-    // Use modulus to determine shard ID
-    val shardId = Math.abs(hashValue) % numberOfShards
-    shardId
+    // Use modulus to determine virtual shard ID
+    val virtualShardId = Math.abs(hashValue) % numberOfShards
+    val physicalShardId = mapToPhysycalShard(virtualShardId)
+    physicalShardId
   }
 
   def main(args: Array[String]): Unit = {
