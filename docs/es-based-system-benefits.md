@@ -8,7 +8,7 @@ Each domain entity is modeled as an actor, which processes commands, generates e
 ## 1. Command Handling and Transactionality
 
 1. **Actor Model and Domain Entities**  
-   Each entity (e.g., Order, Account, Device) is represented by its own actor. A command such as `PlaceOrder` or `UpdateInventory` is routed to the appropriate actor or set of actors.
+   Each entity (e.g., Obligation, Instruction, WorkItem) is represented by its own actor. A command such as `Settle` or `Confirm` is routed to the appropriate actor or set of actors.
 
 2. **Depth-First Traversal**  
    A single command can result in updates to one or many actors. Each actor may generate zero or more events to update its own state, and can also send further commands to other actors within the same transaction flow. This traversal happens in a depth-first manner until all required updates are completed.
