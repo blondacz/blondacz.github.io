@@ -1,0 +1,20 @@
+import com.sun.net.httpserver.{HttpExchange, HttpHandler, HttpServer}
+import java.net.InetSocketAddress
+
+object MiniHealthServer {
+  def main(args: Array[String]): Unit = {
+    val server = HttpServer.create(new InetSocketAddress(8080), 0)
+    server.createContext("/health", new HttpHandler {
+      override def handle(exchange: HttpExchange): Unit = {
+        val resp = """{"status":"up"}"""
+        exchange.getResponseHeaders.add("Content-Type", "application/json")
+        exchange.sendResponseHeaders(200, resp.getBytes.length)
+        val os = exchange.getResponseBody
+        os.write(resp.getBytes)
+        os.close()
+      }
+    })
+    server.start()
+    println("Health endpoint running at http://localhost:8080/health")
+  }
+}
